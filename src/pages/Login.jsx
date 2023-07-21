@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   return (
@@ -46,6 +47,21 @@ const Login = () => {
           className=" bg-sky-700 w-full mb-5 py-3 text-slate-50  uppercase rounded-full font-bold hover:bg-sky-800 hover:cursor-pointer transition-colors duration-300"
         />
       </form>
+
+      <nav className="lg:flex lg:justify-between">
+        <Link
+          className="block text-center my-2 text-slate-500 uppercase text-sm"
+          to={"/registrar"}
+        >
+          ¿No tienes una cuenta? Regístrate
+        </Link>
+        <Link
+          className="block text-center my-2 text-slate-500 uppercase text-sm"
+          to={"/recuperar-password"}
+        >
+          Olvidé Mi Password
+        </Link>
+      </nav>
     </>
   );
 };
