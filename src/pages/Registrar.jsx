@@ -1,7 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Registrar = () => {
+  const [nombre, setNombre] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [repetirPassword, setRepetirPassword] = useState("");
+
   return (
     <>
       <h1 className="text-sky-600 font-black text-6xl capitalize">
@@ -23,6 +28,8 @@ const Registrar = () => {
             id="nombre"
             placeholder="Tu nombre"
             className="w-full mt-3 p-3 border rounded-xl border-gray-300 bg-gray-50 focus:outline-none focus:border-sky-500"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
           />
         </div>
         <div className="my-5">
@@ -38,6 +45,8 @@ const Registrar = () => {
             id="email"
             placeholder="Email de Registro"
             className="w-full mt-3 p-3 border rounded-xl border-gray-300 bg-gray-50 focus:outline-none focus:border-sky-500"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="my-5">
@@ -53,6 +62,8 @@ const Registrar = () => {
             id="password"
             placeholder="Password de Registro"
             className="w-full mt-3 p-3 border rounded-xl border-gray-300 bg-gray-50 focus:outline-none focus:border-sky-500"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
 
@@ -69,6 +80,8 @@ const Registrar = () => {
             id="password2"
             placeholder="Confirmar Password"
             className="w-full mt-3 p-3 border rounded-xl border-gray-300 bg-gray-50 focus:outline-none focus:border-sky-500"
+            value={repetirPassword}
+            onChange={(e) => setRepetirPassword(e.target.value)}
           />
         </div>
 
