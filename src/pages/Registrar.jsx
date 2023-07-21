@@ -1,11 +1,34 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Alerta from "../components/Alerta";
 
 const Registrar = () => {
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [repetirPassword, setRepetirPassword] = useState("");
+  const [alerta, setAlerta] = useState({
+    msg: "",
+    error: false,
+  });
+
+  const handleSumbit = (e) => {
+    e.preventDefault();
+
+    if ([nombre, email, password, repetirPassword].includes("")) {
+      setAlerta({
+        msg: "Todos los campos son obligatorios",
+        error: true,
+      });
+      return;
+    }
+    setAlerta({
+      msg: "",
+      error: false,
+    });
+  };
+
+  const { msg } = alerta;
 
   return (
     <>
@@ -14,7 +37,12 @@ const Registrar = () => {
         <span className="text-slate-700 capitalize">proyectos</span>
       </h1>
 
-      <form className="my-10 bg-white shadow rounded-lg p-10">
+      {msg && <Alerta alerta={alerta} />}
+
+      <form
+        className="my-10 bg-white shadow rounded-lg p-10"
+        onSubmit={handleSumbit}
+      >
         <div className="my-5">
           <label
             htmlFor="nombre"
