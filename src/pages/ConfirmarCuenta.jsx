@@ -23,6 +23,7 @@ const ConfirmarCuenta = () => {
           import.meta.env.VITE_BACKEND_URL
         }/api/usuarios/confirmar/${id}`;
 
+        // TODO: Mover hacia un cliente Axios
         const { data } = await axios.get(url);
 
         console.log(data);

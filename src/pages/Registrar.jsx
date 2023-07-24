@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Alerta from "../components/Alerta";
 
-import axios  from 'axios';
+import axios from "axios";
 
 const Registrar = () => {
   const [nombre, setNombre] = useState("");
@@ -24,7 +24,7 @@ const Registrar = () => {
       });
       return;
     }
-    
+
     if (password !== repetirPassword) {
       setAlerta({
         msg: "Las contraseñas no coinciden",
@@ -40,7 +40,7 @@ const Registrar = () => {
       });
       return;
     }
-    
+
     setAlerta({
       msg: "",
       error: false,
@@ -48,11 +48,15 @@ const Registrar = () => {
 
     // Crear el usuario en la API
     try {
-      const {data} = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/usuarios`, {
-        nombre,
-        email,
-        password
-      });
+      // TODO: Mover hacia un cliente Axios
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/usuarios`,
+        {
+          nombre,
+          email,
+          password,
+        }
+      );
 
       // console.log(data)
       setAlerta({
@@ -60,21 +64,17 @@ const Registrar = () => {
         error: false,
       });
 
-      setNombre('');
-      setEmail('');
-      setPassword('');
-      setRepetirPassword('');
-
-    }
-    catch (error) {
+      setNombre("");
+      setEmail("");
+      setPassword("");
+      setRepetirPassword("");
+    } catch (error) {
       // console.log(error.response.data.msg)
       setAlerta({
         msg: error.response.data.msg,
         error: true,
       });
     }
-
-
   };
 
   const { msg } = alerta;

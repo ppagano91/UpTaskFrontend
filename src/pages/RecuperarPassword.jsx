@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Alerta from "../components/Alerta";
+import axios from "axios";
 
 const RecuperarPassword = () => {
   const [email, setEmail] = useState("");
@@ -9,7 +10,7 @@ const RecuperarPassword = () => {
     error: false,
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(email);
 
@@ -29,6 +30,27 @@ const RecuperarPassword = () => {
         error: true,
       });
       return;
+    }
+
+    try {
+      // TODO: Mover hacia un cliente Axios
+      const { data } = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/usuarios/recuperar-password`,
+        { email }
+      );
+
+      setAlerta({
+        msg: data.msg,
+        error: false,
+      });
+
+      console.log(data);
+    } catch (error) {
+      console.log(error.response);
+      setAlerta({
+        msg: error.response.data.msg,
+        error: true,
+      });
     }
   };
 
