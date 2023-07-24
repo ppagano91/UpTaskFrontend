@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Alerta from "../components/Alerta";
 
+import axios  from 'axios';
+
 const Registrar = () => {
   const [nombre, setNombre] = useState("");
   const [email, setEmail] = useState("");
@@ -12,7 +14,7 @@ const Registrar = () => {
     error: false,
   });
 
-  const handleSumbit = (e) => {
+  const handleSumbit = async (e) => {
     e.preventDefault();
 
     if ([nombre, email, password, repetirPassword].includes("")) {
@@ -31,23 +33,41 @@ const Registrar = () => {
       return;
     }
 
-    if (password.length < 8) {
+    if (password.length < 6) {
       setAlerta({
-        msg: "La contraseña debe tener al menos 8 caracteres",
+        msg: "La contraseña debe tener al menos 6 caracteres",
         error: true,
       });
       return;
     }
-
-
     
     setAlerta({
       msg: "",
       error: false,
     });
 
+    // Crear el usuario en la API
+    try {
+      const {data} = await axios.post('http://localhost:4000/api/usuarios', {
+        nombre,
+        email,
+        password
+      });
 
+      console.log(data)
+      setAlerta({
+        msg: data.msg,
+        error: false,
+      });
 
+    }
+    catch (error) {
+      console.log(error.response.data.msg)
+      setAlerta({
+        msg: error.response.data.msg,
+        error: true,
+      });
+    }
 
 
   };
