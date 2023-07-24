@@ -1,7 +1,39 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Alerta from "../components/Alerta";
 
 const RecuperarPassword = () => {
+  const [email, setEmail] = useState("");
+  const [alerta, setAlerta] = useState({
+    msg: "",
+    error: false,
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(email);
+
+    if (email.trim() === "") {
+      setAlerta({
+        msg: "El email es obligatorio",
+        error: true,
+      });
+      return;
+    }
+
+    // si el input es de tipo text y no es un email válido
+    const regexEmail = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+    if (!regexEmail.test(email)) {
+      setAlerta({
+        msg: "El email no es válido",
+        error: true,
+      });
+      return;
+    }
+  };
+
+  const { msg } = alerta;
+
   return (
     <>
       <h1 className="text-sky-600 font-black text-6xl capitalize">
@@ -9,7 +41,12 @@ const RecuperarPassword = () => {
         <span className="text-slate-700 capitalize">proyectos</span>
       </h1>
 
-      <form className="my-10 bg-white shadow rounded-lg p-10">
+      {msg && <Alerta alerta={alerta} />}
+
+      <form
+        className="my-10 bg-white shadow rounded-lg p-10"
+        onSubmit={handleSubmit}
+      >
         <div className="my-5">
           <label
             htmlFor="email"
@@ -23,6 +60,8 @@ const RecuperarPassword = () => {
             id="email"
             placeholder="Email de Registro"
             className="w-full mt-3 p-3 border rounded-xl border-gray-300 bg-gray-50 focus:outline-none focus:border-sky-500"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
 
