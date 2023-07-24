@@ -22,10 +22,34 @@ const Registrar = () => {
       });
       return;
     }
+    
+    if (password !== repetirPassword) {
+      setAlerta({
+        msg: "Las contraseñas no coinciden",
+        error: true,
+      });
+      return;
+    }
+
+    if (password.length < 8) {
+      setAlerta({
+        msg: "La contraseña debe tener al menos 8 caracteres",
+        error: true,
+      });
+      return;
+    }
+
+
+    
     setAlerta({
       msg: "",
       error: false,
     });
+
+
+
+
+
   };
 
   const { msg } = alerta;
