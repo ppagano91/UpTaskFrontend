@@ -12,7 +12,7 @@ const Login = () => {
     error: false,
   });
 
-  // const {} = useAuth();
+  const { setAuth } = useAuth();
 
   const navigate = useNavigate();
 
@@ -40,6 +40,8 @@ const Login = () => {
 
       console.log(data);
       localStorage.setItem("token", data.token);
+
+      setAuth(data);
     } catch (error) {
       console.log(error.response);
       setAlerta({
