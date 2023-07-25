@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Alerta from "../components/Alerta";
-import axios from "axios";
+import clienteAxios from "../config/clienteAxios";
 
 const RecuperarPassword = () => {
   const [email, setEmail] = useState("");
@@ -33,11 +33,9 @@ const RecuperarPassword = () => {
     }
 
     try {
-      // TODO: Mover hacia un cliente Axios
-      const { data } = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/usuarios/recuperar-password`,
-        { email }
-      );
+      const { data } = await clienteAxios.post(`/usuarios/recuperar-password`, {
+        email,
+      });
 
       setAlerta({
         msg: data.msg,
