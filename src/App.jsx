@@ -6,6 +6,8 @@ import Registrar from "./pages/Registrar";
 import RecuperarPassword from "./pages/RecuperarPassword";
 import NuevoPassword from "./pages/NuevoPassword";
 import ConfirmarCuenta from "./pages/ConfirmarCuenta";
+import Proyectos from "./pages/Proyectos";
+import RutaProtegida from "./layouts/RutaProtegida";
 
 // Context
 import { AuthProvider } from "./context/AuthProvider";
@@ -30,6 +32,11 @@ function App() {
             />
             <Route index path="confirmar/:id" element={<ConfirmarCuenta />} />
           </Route>
+          <Route path="/proyectos" element={<RutaProtegida />}>
+            <Route index element={<Proyectos />} />
+          </Route>
+
+          <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>
       </AuthProvider>
     </Router>
