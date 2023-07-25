@@ -12,34 +12,37 @@ import NuevoProyecto from "./pages/NuevoProyecto";
 
 // Context
 import { AuthProvider } from "./context/AuthProvider";
+import { ProyectosProvider } from "./context/ProyectosProvider";
 
 function App() {
   return (
     <Router>
       <AuthProvider>
-        <Routes>
-          <Route path="/" element={<AuthLayout />}>
-            <Route index element={<Login />} />
-            <Route index path="registrar" element={<Registrar />} />
-            <Route
-              index
-              path="recuperar-password"
-              element={<RecuperarPassword />}
-            />
-            <Route
-              index
-              path="recuperar-password/:token"
-              element={<NuevoPassword />}
-            />
-            <Route index path="confirmar/:id" element={<ConfirmarCuenta />} />
-          </Route>
-          <Route path="/proyectos" element={<RutaProtegida />}>
-            <Route index element={<Proyectos />} />
-            <Route path="crear-proyecto" element={<NuevoProyecto />} />
-          </Route>
+        <ProyectosProvider>
+          <Routes>
+            <Route path="/" element={<AuthLayout />}>
+              <Route index element={<Login />} />
+              <Route index path="registrar" element={<Registrar />} />
+              <Route
+                index
+                path="recuperar-password"
+                element={<RecuperarPassword />}
+              />
+              <Route
+                index
+                path="recuperar-password/:token"
+                element={<NuevoPassword />}
+              />
+              <Route index path="confirmar/:id" element={<ConfirmarCuenta />} />
+            </Route>
+            <Route path="/proyectos" element={<RutaProtegida />}>
+              <Route index element={<Proyectos />} />
+              <Route path="crear-proyecto" element={<NuevoProyecto />} />
+            </Route>
 
-          <Route path="*" element={<h1>Not Found</h1>} />
-        </Routes>
+            <Route path="*" element={<h1>Not Found</h1>} />
+          </Routes>
+        </ProyectosProvider>
       </AuthProvider>
     </Router>
   );
