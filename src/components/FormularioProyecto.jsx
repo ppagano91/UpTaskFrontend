@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import useProyectos from "../hooks/useProyectos";
+import Alerta from "./Alerta";
 
 const FormularioProyecto = () => {
   // State para proyecto
@@ -7,8 +9,37 @@ const FormularioProyecto = () => {
   const [fechaEntrega, setFechaEntrega] = useState("");
   const [cliente, setCliente] = useState("");
 
+  const { alerta, mostrarAlerta, sumbitProyecto } = useProyectos();
+
+  const handleSumbit = (e) => {
+    e.preventDefault();
+
+    // Validar el proyecto
+    if ([nombre, descripcion, fechaEntrega, cliente].includes("")) {
+      console.log("Todos los campos son obligatorios");
+      mostrarAlerta({
+        msg: "Todos los campos son obligatorios",
+        error: true,
+      });
+      return;
+    }
+
+    // Pasar los datos al Provider
+    sumbitProyecto({
+      nombre,
+      descripcion,
+      fechaEntrega,
+      cliente,
+    });
+  };
+
+  const { msg } = alerta;
   return (
-    <form className="bg-white py-10 px-5 md:w-1/2 rounded-lg shadow">
+    <form
+      className="bg-white py-10 px-5 md:w-1/2 rounded-lg shadow"
+      onSubmit={handleSumbit}
+    >
+      {msg && <Alerta alerta={alerta} />}
       <div className="mb-5">
         <label
           htmlFor="nombre"

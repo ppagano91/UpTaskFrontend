@@ -6,9 +6,30 @@ const ProyectosContext = createContext();
 
 const ProyectosProvider = ({ children }) => {
   const [proyectos, setProyectos] = useState([]);
+  const [alerta, setAlerta] = useState({
+    msg: "",
+    error: false,
+  });
+
+  const mostrarAlerta = (alerta) => {
+    setAlerta(alerta);
+
+    setTimeout(() => {
+      setAlerta({
+        msg: "",
+        error: false,
+      });
+    }, 5000);
+  };
+
+  const sumbitProyecto = async (proyecto) => {
+    console.log(proyecto);
+  };
 
   return (
-    <ProyectosContext.Provider value={{ proyectos }}>
+    <ProyectosContext.Provider
+      value={{ proyectos, alerta, mostrarAlerta, sumbitProyecto }}
+    >
       {children}
     </ProyectosContext.Provider>
   );
