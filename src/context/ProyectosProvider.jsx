@@ -28,7 +28,6 @@ const ProyectosProvider = ({ children }) => {
         };
 
         const { data } = await clienteAxios.get("/proyectos", config);
-        // console.log(data);
         setProyectos(data.proyectos);
       } catch (error) {
         console.log(error);
@@ -63,10 +62,14 @@ const ProyectosProvider = ({ children }) => {
       };
 
       const { data } = await clienteAxios.post("/proyectos", proyecto, config);
+
+      setProyectos([...proyectos, data]);
+
       setAlerta({
         msg: "Proyecto creado correctamente",
         error: false,
       });
+
       setTimeout(() => {
         setAlerta({
           msg: "",

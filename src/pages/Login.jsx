@@ -38,7 +38,6 @@ const Login = () => {
         error: false,
       });
 
-      // console.log("Login:", data);
       localStorage.setItem("token", data.token);
       localStorage.setItem("nombre", data.nombre);
       setAuth(data);
