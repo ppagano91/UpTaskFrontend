@@ -38,10 +38,11 @@ const Login = () => {
         error: false,
       });
 
-      console.log(data);
+      // console.log("Login:", data);
       localStorage.setItem("token", data.token);
-
+      localStorage.setItem("nombre", data.nombre);
       setAuth(data);
+      navigate("/proyectos");
     } catch (error) {
       console.log(error.response);
       setAlerta({
