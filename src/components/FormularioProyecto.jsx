@@ -11,7 +11,7 @@ const FormularioProyecto = () => {
 
   const { alerta, mostrarAlerta, sumbitProyecto } = useProyectos();
 
-  const handleSumbit = (e) => {
+  const handleSumbit = async (e) => {
     e.preventDefault();
 
     // Validar el proyecto
@@ -25,21 +25,26 @@ const FormularioProyecto = () => {
     }
 
     // Pasar los datos al Provider
-    sumbitProyecto({
+    await sumbitProyecto({
       nombre,
       descripcion,
       fechaEntrega,
       cliente,
     });
+
+    // Reiniciar el form
+    setNombre("");
+    setDescripcion("");
+    setFechaEntrega("");
+    setCliente("");
   };
 
   const { msg } = alerta;
   return (
     <form
-      className="bg-white py-10 px-5 md:w-1/2 rounded-lg shadow"
+      className="bg-white py-10 px-5 md:w-3/5 rounded-lg shadow"
       onSubmit={handleSumbit}
     >
-      {msg && <Alerta alerta={alerta} />}
       <div className="mb-5">
         <label
           htmlFor="nombre"
@@ -104,6 +109,7 @@ const FormularioProyecto = () => {
           onChange={(e) => setCliente(e.target.value)}
         />
       </div>
+      {msg && <Alerta alerta={alerta} />}
       <input
         type="submit"
         value={"Crear Proyecto"}
