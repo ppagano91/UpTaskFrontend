@@ -72,11 +72,11 @@ const ModalFormularioTarea = () => {
     });
 
     // Resetear formulario
-    setId("");
     setNombre("");
     setDescripcion("");
     setPrioridad("");
     setFechaEntrega("");
+    setId("");
   };
   const { msg } = alerta;
   return (

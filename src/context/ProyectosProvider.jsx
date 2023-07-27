@@ -230,12 +230,13 @@ const ProyectosProvider = ({ children }) => {
     setTarea({});
   };
 
-  // Crear Tarea
+  // Submit Tarea
   const submitTarea = async (tarea) => {
-    if (tarea?.id) {
+    if (tarea?.id !== "") {
       await editarTarea(tarea);
     } else {
-      await crearTarea(tarea);
+      const { id, ...tareaSinId } = tarea;
+      await crearTarea(tareaSinId);
     }
   };
 
@@ -291,9 +292,13 @@ const ProyectosProvider = ({ children }) => {
         config
       );
 
-      console.log(data);
+      // console.log(data);
 
-      // TODO: Actualizar DOM
+      const proyectoActualizado = { ...proyecto };
+      proyectoActualizado.tareas = proyectoActualizado.tareas.map(
+        (tareaState) => (tareaState._id === data._id ? data : tareaState)
+      );
+      setProyecto(proyectoActualizado);
 
       setAlerta({
         msg: "",
