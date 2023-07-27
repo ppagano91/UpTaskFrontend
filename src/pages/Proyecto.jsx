@@ -8,7 +8,8 @@ const Proyecto = () => {
   const params = useParams();
   const { id } = params;
 
-  const { obtenerProyecto, proyecto, cargando } = useProyectos();
+  const { obtenerProyecto, proyecto, cargando, handleModalTarea } =
+    useProyectos();
   const { nombre } = proyecto;
 
   useEffect(() => {
@@ -43,7 +44,7 @@ const Proyecto = () => {
       </div>
       <button
         className="text-sm px-5 py-3 w-full md:w-auto rounded-lg uppercase font-bold bg-sky-400 text-white text-center mt-5 flex gap-2 items-center justify-center hover:bg-sky-600 transition-all duration-300"
-        onClick={() => setModal(true)}
+        onClick={handleModalTarea}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
