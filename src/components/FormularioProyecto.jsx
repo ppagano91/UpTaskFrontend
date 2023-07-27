@@ -11,7 +11,7 @@ const FormularioProyecto = () => {
   const [fechaEntrega, setFechaEntrega] = useState("");
   const [cliente, setCliente] = useState("");
 
-  const { alerta, mostrarAlerta, sumbitProyecto, proyecto } = useProyectos();
+  const { alerta, mostrarAlerta, submitProyecto, proyecto } = useProyectos();
 
   const params = useParams();
 
@@ -25,7 +25,7 @@ const FormularioProyecto = () => {
     }
   }, [params]);
 
-  const handleSumbit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validar el proyecto
@@ -39,7 +39,8 @@ const FormularioProyecto = () => {
     }
 
     // Pasar los datos al Provider
-    await sumbitProyecto({
+    await submitProyecto({
+      id,
       nombre,
       descripcion,
       fechaEntrega,
@@ -47,6 +48,7 @@ const FormularioProyecto = () => {
     });
 
     // Reiniciar el form
+    setId(null);
     setNombre("");
     setDescripcion("");
     setFechaEntrega("");
@@ -57,7 +59,7 @@ const FormularioProyecto = () => {
   return (
     <form
       className="bg-white py-10 px-5 md:w-3/5 rounded-lg shadow"
-      onSubmit={handleSumbit}
+      onSubmit={handleSubmit}
     >
       <div className="mb-5">
         <label

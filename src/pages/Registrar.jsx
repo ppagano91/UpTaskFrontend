@@ -13,7 +13,7 @@ const Registrar = () => {
     error: false,
   });
 
-  const handleSumbit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if ([nombre, email, password, repetirPassword].includes("")) {
@@ -85,7 +85,7 @@ const Registrar = () => {
 
       <form
         className="my-10 bg-white shadow rounded-lg p-10"
-        onSubmit={handleSumbit}
+        onSubmit={handleSubmit}
       >
         <div className="my-5">
           <label

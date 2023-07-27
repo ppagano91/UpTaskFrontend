@@ -50,8 +50,50 @@ const ProyectosProvider = ({ children }) => {
     }, 5000);
   };
 
-  const sumbitProyecto = async (proyecto) => {
-    console.log(proyecto);
+  const submitProyecto = async (proyecto) => {
+    if (proyecto.id) {
+      editarProyecto(proyecto);
+    } else {
+      nuevoProyecto(proyecto);
+    }
+
+    return;
+  };
+
+  // Función para editar proyecto
+  const editarProyecto = async (proyecto) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) return;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await clienteAxios.put(
+        `/proyectos/${proyecto.id}`,
+        proyecto,
+        config
+      );
+
+      console.log(data);
+
+      // TODO: Sincronizar el state
+
+      // TODO: Mostrar alerta
+
+      // TODO: Redireccionar
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Función para crear nuevo proyecto
+  const nuevoProyecto = async (proyecto) => {
     try {
       const token = localStorage.getItem("token");
 
@@ -125,7 +167,7 @@ const ProyectosProvider = ({ children }) => {
         alerta,
         cargando,
         mostrarAlerta,
-        sumbitProyecto,
+        submitProyecto,
         obtenerProyecto,
       }}
     >
