@@ -1,8 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import useProyectos from "../hooks/useProyectos";
+import ModalFormularioTarea from "../components/ModalFormularioTarea";
 
 const Proyecto = () => {
+  const [modal, setModal] = useState(false);
   const params = useParams();
   const { id } = params;
 
@@ -39,7 +41,10 @@ const Proyecto = () => {
           </Link>
         </div>
       </div>
-      <button className="text-sm px-5 py-3 w-full md:w-auto rounded-lg uppercase font-bold bg-sky-400 text-white text-center mt-5 flex gap-2 items-center justify-center hover:bg-sky-600 transition-all duration-300">
+      <button
+        className="text-sm px-5 py-3 w-full md:w-auto rounded-lg uppercase font-bold bg-sky-400 text-white text-center mt-5 flex gap-2 items-center justify-center hover:bg-sky-600 transition-all duration-300"
+        onClick={() => setModal(true)}
+      >
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -56,6 +61,8 @@ const Proyecto = () => {
         </svg>
         Nueva Tarea
       </button>
+
+      <ModalFormularioTarea modal={modal} setModal={setModal} />
     </>
   );
 };
