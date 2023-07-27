@@ -14,6 +14,8 @@ const ProyectosProvider = ({ children }) => {
   const [proyecto, setProyecto] = useState({});
   const [cargando, setCargando] = useState(false);
 
+  const [proyectoCreadoEliminado, setProyectoCreadoEliminado] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -47,14 +49,15 @@ const ProyectosProvider = ({ children }) => {
         msg: "",
         error: false,
       });
-    }, 5000);
+    }, 3000);
   };
 
   const submitProyecto = async (proyecto) => {
     if (proyecto.id) {
       await editarProyecto(proyecto);
     } else {
-      await nuevoProyecto(proyecto);
+      const { id, ...proyectoSinId } = proyecto;
+      await nuevoProyecto(proyectoSinId);
     }
 
     return;
@@ -131,16 +134,16 @@ const ProyectosProvider = ({ children }) => {
         msg: "Proyecto creado correctamente",
         error: false,
       });
+      setProyectoCreadoEliminado(true);
 
       setTimeout(() => {
         setAlerta({
           msg: "",
           error: false,
         });
+        setProyectoCreadoEliminado(false);
         navigate("/proyectos");
       }, 3000);
-
-      console.log(data);
     } catch (error) {
       setAlerta({
         msg: error.response.data.msg,
@@ -151,8 +154,42 @@ const ProyectosProvider = ({ children }) => {
 
   // Función para eliminar proyecto
   const eliminarProyecto = async (id) => {
+    console.log("Elimnando proyecto", id);
     try {
-      console.log("Elimnando proyecto", id);
+      const token = localStorage.getItem("token");
+
+      if (!token) return;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await clienteAxios.delete(`/proyectos/${id}`, config);
+
+      // // Sincronizar el state
+      const proyectosActualizados = proyectos.filter(
+        (proyecto) => proyecto._id !== id
+      );
+      setProyectos(proyectosActualizados);
+      setProyectoCreadoEliminado(true);
+
+      // Mostrar alerta
+      setAlerta({
+        msg: "Proyecto eliminado correctamente",
+        error: false,
+      });
+
+      setTimeout(() => {
+        setAlerta({
+          msg: "",
+          error: false,
+        });
+        setProyectoCreadoEliminado(false);
+        navigate("/proyectos");
+      }, 3000);
     } catch (error) {
       console.log(error);
     }
@@ -195,6 +232,7 @@ const ProyectosProvider = ({ children }) => {
         submitProyecto,
         obtenerProyecto,
         eliminarProyecto,
+        proyectoCreadoEliminado,
       }}
     >
       {children}
