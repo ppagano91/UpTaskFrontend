@@ -7,18 +7,13 @@ const Proyecto = () => {
   const { id } = params;
 
   const { obtenerProyecto, proyecto, cargando } = useProyectos();
-  const {
-    nombre,
-    cliente,
-    descripcion,
-    fechaInicio,
-    fechaEntrega,
-    tecnologias,
-  } = proyecto;
+  const { nombre } = proyecto;
 
   useEffect(() => {
     obtenerProyecto(id);
   }, [id]);
+
+  if (cargando) return "Cargando...";
 
   return cargando ? (
     "cargando..."

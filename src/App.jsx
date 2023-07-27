@@ -10,6 +10,7 @@ import Proyectos from "./pages/Proyectos";
 import RutaProtegida from "./layouts/RutaProtegida";
 import NuevoProyecto from "./pages/NuevoProyecto";
 import Proyecto from "./pages/Proyecto";
+import EditarProyecto from "./pages/EditarProyecto";
 
 // Context
 import { AuthProvider } from "./context/AuthProvider";
@@ -40,6 +41,7 @@ function App() {
               <Route index element={<Proyectos />} />
               <Route path="crear-proyecto" element={<NuevoProyecto />} />
               <Route path=":id" element={<Proyecto />} />
+              <Route path="editar/:id" element={<EditarProyecto />} />
             </Route>
 
             <Route path="*" element={<h1>Not Found</h1>} />
