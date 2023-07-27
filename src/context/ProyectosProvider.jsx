@@ -232,7 +232,15 @@ const ProyectosProvider = ({ children }) => {
 
   // Crear Tarea
   const submitTarea = async (tarea) => {
-    console.log(tarea);
+    if (tarea?.id) {
+      await editarTarea(tarea);
+    } else {
+      await crearTarea(tarea);
+    }
+  };
+
+  // Crear Tarea
+  const crearTarea = async (tarea) => {
     try {
       const token = localStorage.getItem("token");
 
@@ -246,7 +254,6 @@ const ProyectosProvider = ({ children }) => {
       };
 
       const { data } = await clienteAxios.post(`/tareas`, tarea, config);
-      // console.log("tarea: ", data);
 
       // Agregar la tarea al state
       const proyectoActualizado = { ...proyecto };
@@ -258,6 +265,40 @@ const ProyectosProvider = ({ children }) => {
         error: false,
       });
 
+      setModalFormularioTarea(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  // Editar Tarea
+  const editarTarea = async (tarea) => {
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) return;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await clienteAxios.put(
+        `/tareas/${tarea.id}`,
+        tarea,
+        config
+      );
+
+      console.log(data);
+
+      // TODO: Actualizar DOM
+
+      setAlerta({
+        msg: "",
+        error: false,
+      });
       setModalFormularioTarea(false);
     } catch (error) {
       console.log(error);

@@ -63,6 +63,7 @@ const ModalFormularioTarea = () => {
 
     // Enviar datos del formulario al context
     await submitTarea({
+      id,
       nombre,
       descripcion,
       prioridad,
@@ -71,6 +72,7 @@ const ModalFormularioTarea = () => {
     });
 
     // Resetear formulario
+    setId("");
     setNombre("");
     setDescripcion("");
     setPrioridad("");
