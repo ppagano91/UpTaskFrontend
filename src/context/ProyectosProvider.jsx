@@ -11,6 +11,9 @@ const ProyectosProvider = ({ children }) => {
     error: false,
   });
 
+  const [proyecto, setProyecto] = useState({});
+  const [cargando, setCargando] = useState(false);
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -90,6 +93,7 @@ const ProyectosProvider = ({ children }) => {
 
   // Obtener Proyecto
   const obtenerProyecto = async (id) => {
+    setCargando(true);
     try {
       const token = localStorage.getItem("token");
 
@@ -103,9 +107,13 @@ const ProyectosProvider = ({ children }) => {
       };
 
       const { data } = await clienteAxios.get(`/proyectos/${id}`, config);
-      console.log(data);
+      // console.log(data);
+
+      setProyecto(data);
     } catch (error) {
       console.log(error);
+    } finally {
+      setCargando(false);
     }
   };
 
@@ -113,7 +121,9 @@ const ProyectosProvider = ({ children }) => {
     <ProyectosContext.Provider
       value={{
         proyectos,
+        proyecto,
         alerta,
+        cargando,
         mostrarAlerta,
         sumbitProyecto,
         obtenerProyecto,
