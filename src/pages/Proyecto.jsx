@@ -15,9 +15,7 @@ const Proyecto = () => {
 
   if (cargando) return "Cargando...";
 
-  return cargando ? (
-    "cargando..."
-  ) : (
+  return (
     <div className="flex justify-between ">
       <h1 className="font-black text-4xl">{nombre}</h1>
       <div className="flex items-center gap-2 text-gray-400 hover:text-black">

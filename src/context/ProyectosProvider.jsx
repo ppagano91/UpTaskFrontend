@@ -149,6 +149,15 @@ const ProyectosProvider = ({ children }) => {
     }
   };
 
+  // Función para eliminar proyecto
+  const eliminarProyecto = async (id) => {
+    try {
+      console.log("Elimnando proyecto", id);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // Obtener Proyecto
   const obtenerProyecto = async (id) => {
     setCargando(true);
@@ -185,6 +194,7 @@ const ProyectosProvider = ({ children }) => {
         mostrarAlerta,
         submitProyecto,
         obtenerProyecto,
+        eliminarProyecto,
       }}
     >
       {children}
