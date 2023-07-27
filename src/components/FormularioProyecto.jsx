@@ -1,15 +1,29 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import useProyectos from "../hooks/useProyectos";
 import Alerta from "./Alerta";
 
 const FormularioProyecto = () => {
   // State para proyecto
+  const [id, setId] = useState(null); // [1]
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [fechaEntrega, setFechaEntrega] = useState("");
   const [cliente, setCliente] = useState("");
 
-  const { alerta, mostrarAlerta, sumbitProyecto } = useProyectos();
+  const { alerta, mostrarAlerta, sumbitProyecto, proyecto } = useProyectos();
+
+  const params = useParams();
+
+  useEffect(() => {
+    if (params.id && proyecto !== {}) {
+      setId(proyecto._id);
+      setNombre(proyecto.nombre);
+      setDescripcion(proyecto.descripcion);
+      setFechaEntrega(proyecto.fechaEntrega?.split("T")[0]);
+      setCliente(proyecto.cliente);
+    }
+  }, [params]);
 
   const handleSumbit = async (e) => {
     e.preventDefault();
@@ -112,7 +126,7 @@ const FormularioProyecto = () => {
       {msg && <Alerta alerta={alerta} />}
       <input
         type="submit"
-        value={"Crear Proyecto"}
+        value={id ? "Actualizar Proyecto" : "Crear Proyecto"}
         className="bg-sky-600 w-full p-3 uppercase font-bold text-white rounded cursor-pointer hover:bg-sky-700 transition-colors"
       />
     </form>
