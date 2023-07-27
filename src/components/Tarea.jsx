@@ -10,8 +10,8 @@ const Tarea = ({ tarea }) => {
       <div className="ml-2 mr-5">
         <p className="mb-1 text-xl">{nombre}</p>
         <p className="mb-1 text-md text-gray-500 uppercase">{descripcion}</p>
-        <p className="mb-1 text-xl">{formatearFecha(fechaEntrega)}</p>
-        <p className="mb-1 text-xl text-gray-600">{prioridad}</p>
+        <p className="mb-1 text-md">{formatearFecha(fechaEntrega)}</p>
+        <p className="mb-1 text-gray-600">{prioridad}</p>
       </div>
       <div className="flex gap-2">
         {estado ? (

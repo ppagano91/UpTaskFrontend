@@ -13,6 +13,7 @@ const PRIORIDAD = [
 ];
 
 const ModalFormularioTarea = () => {
+  const [id, setId] = useState(""); // Se usa para editar la tarea
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [prioridad, setPrioridad] = useState("");
@@ -30,7 +31,19 @@ const ModalFormularioTarea = () => {
   } = useProyectos();
 
   useEffect(() => {
-    console.log(tarea);
+    if (tarea?._id) {
+      setId(tarea._id);
+      setNombre(tarea.nombre);
+      setDescripcion(tarea.descripcion);
+      setPrioridad(tarea.prioridad);
+      setFechaEntrega(tarea.fechaEntrega?.split("T")[0]);
+      return;
+    }
+    setId("");
+    setNombre("");
+    setDescripcion("");
+    setPrioridad("");
+    setFechaEntrega("");
   }, [tarea]);
 
   const handleSubmit = async (e) => {
@@ -130,7 +143,7 @@ const ModalFormularioTarea = () => {
                     as="h1"
                     className="text-lg leading-6 font-bold text-gray-900"
                   >
-                    Crear Tarea
+                    {id ? "Editar Tarea" : "Crear Tarea"}
                   </Dialog.Title>
 
                   {msg && <Alerta alerta={alerta} />}
@@ -209,7 +222,7 @@ const ModalFormularioTarea = () => {
                     <input
                       type="submit"
                       className="bg-sky-600 w-full mt-5 p-3 text-white uppercase font-bold hover:bg-sky-800 cursor-pointer transition-colors rounded"
-                      value="Crear Tarea"
+                      value={id ? "Guardar Cambios" : "Crear Tarea"}
                     />
                   </form>
                 </div>
