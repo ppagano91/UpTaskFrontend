@@ -4,6 +4,8 @@ import Alerta from "./Alerta";
 
 import useProyectos from "../hooks/useProyectos";
 
+import { useParams } from "react-router-dom";
+
 const PRIORIDAD = [
   { id: 1, nombre: "Baja" },
   { id: 2, nombre: "Media" },
@@ -14,6 +16,9 @@ const ModalFormularioTarea = () => {
   const [nombre, setNombre] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [prioridad, setPrioridad] = useState("");
+  const [fechaEntrega, setFechaEntrega] = useState("");
+
+  const params = useParams();
 
   const {
     modalFormularioTarea,
@@ -27,7 +32,9 @@ const ModalFormularioTarea = () => {
     e.preventDefault();
 
     // Validar formulario
-    if ([nombre.trim(), descripcion.trim(), prioridad].includes("")) {
+    if (
+      [nombre.trim(), descripcion.trim(), fechaEntrega, prioridad].includes("")
+    ) {
       mostrarAlerta({
         msg: "Todos los campos son obligatorios",
         error: true,
@@ -37,7 +44,13 @@ const ModalFormularioTarea = () => {
     }
 
     // Enviar datos del formulario al context
-    submitTarea({ nombre, descripcion, prioridad });
+    submitTarea({
+      nombre,
+      descripcion,
+      prioridad,
+      fechaEntrega,
+      proyecto: params.id,
+    });
   };
   const { msg } = alerta;
   return (
@@ -127,6 +140,7 @@ const ModalFormularioTarea = () => {
                         onChange={(e) => setNombre(e.target.value)}
                       />
                     </div>
+
                     <div className="mb-5">
                       <label
                         htmlFor="descripcion"
@@ -142,6 +156,23 @@ const ModalFormularioTarea = () => {
                         onChange={(e) => setDescripcion(e.target.value)}
                       />
                     </div>
+
+                    <div className="mb-5">
+                      <label
+                        htmlFor="fecha-entrega"
+                        className="text-gray-700 uppercase font-bold text-sm"
+                      >
+                        Fecha de Entrega Tarea
+                      </label>
+                      <input
+                        type="date"
+                        id="fecha-entrega"
+                        className="w-full border-2 p-2 mt-2 rounded-md placeholder-gray-400"
+                        value={fechaEntrega}
+                        onChange={(e) => setFechaEntrega(e.target.value)}
+                      />
+                    </div>
+
                     <div className="mb-5">
                       <label
                         htmlFor="prioridad"
@@ -158,7 +189,7 @@ const ModalFormularioTarea = () => {
                       >
                         <option value="">-- Seleccione --</option>
                         {PRIORIDAD.map((prioridad) => (
-                          <option key={prioridad.id} value={prioridad.id}>
+                          <option key={prioridad.id} value={prioridad.nombre}>
                             {prioridad.nombre}
                           </option>
                         ))}
