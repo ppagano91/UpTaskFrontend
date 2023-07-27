@@ -28,7 +28,7 @@ const ModalFormularioTarea = () => {
     submitTarea,
   } = useProyectos();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Validar formulario
@@ -44,13 +44,19 @@ const ModalFormularioTarea = () => {
     }
 
     // Enviar datos del formulario al context
-    submitTarea({
+    await submitTarea({
       nombre,
       descripcion,
       prioridad,
       fechaEntrega,
       proyecto: params.id,
     });
+
+    // Resetear formulario
+    setNombre("");
+    setDescripcion("");
+    setPrioridad("");
+    setFechaEntrega("");
   };
   const { msg } = alerta;
   return (
