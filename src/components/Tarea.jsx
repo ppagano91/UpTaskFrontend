@@ -1,21 +1,19 @@
 import React from "react";
 import { formatearFecha } from "../helpers/formatearFecha";
+import useProyectos from "../hooks/useProyectos";
 
 const Tarea = ({ tarea }) => {
+  const { handleModalEditarTarea } = useProyectos();
   const { nombre, descripcion, prioridad, fechaEntrega, estado, _id } = tarea;
   return (
-    <div className="border-b p-5 flex justify-between items-center">
-      <div>
+    <div className="border-b p-5 flex flex-col md:flex-row justify-between items-center">
+      <div className="ml-2 mr-5">
         <p className="mb-1 text-xl">{nombre}</p>
         <p className="mb-1 text-md text-gray-500 uppercase">{descripcion}</p>
         <p className="mb-1 text-xl">{formatearFecha(fechaEntrega)}</p>
         <p className="mb-1 text-xl text-gray-600">{prioridad}</p>
       </div>
       <div className="flex gap-2">
-        <button className="bg-indigo-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg">
-          Editar
-        </button>
-
         {estado ? (
           <button className="bg-green-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg">
             Completa
@@ -25,6 +23,12 @@ const Tarea = ({ tarea }) => {
             Incompleta
           </button>
         )}
+        <button
+          className="bg-indigo-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
+          onClick={() => handleModalEditarTarea(tarea)}
+        >
+          Editar
+        </button>
         <button className="bg-red-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg">
           Eliminar
         </button>
