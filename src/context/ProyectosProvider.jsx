@@ -227,6 +227,11 @@ const ProyectosProvider = ({ children }) => {
     setModalFormularioTarea(!modalFormularioTarea);
   };
 
+  // Crear Tarea
+  const submitTarea = async (tarea) => {
+    console.log(tarea);
+  };
+
   return (
     <ProyectosContext.Provider
       value={{
@@ -241,6 +246,7 @@ const ProyectosProvider = ({ children }) => {
         proyectoCreadoEliminado,
         modalFormularioTarea,
         handleModalTarea,
+        submitTarea,
       }}
     >
       {children}

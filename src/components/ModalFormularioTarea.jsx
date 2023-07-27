@@ -1,5 +1,6 @@
 import { Fragment, useState, useEffect } from "react";
 import { Dialog, Transition } from "@headlessui/react";
+import Alerta from "./Alerta";
 
 import useProyectos from "../hooks/useProyectos";
 
@@ -14,7 +15,31 @@ const ModalFormularioTarea = () => {
   const [descripcion, setDescripcion] = useState("");
   const [prioridad, setPrioridad] = useState("");
 
-  const { modalFormularioTarea, handleModalTarea } = useProyectos();
+  const {
+    modalFormularioTarea,
+    handleModalTarea,
+    mostrarAlerta,
+    alerta,
+    submitTarea,
+  } = useProyectos();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Validar formulario
+    if ([nombre.trim(), descripcion.trim(), prioridad].includes("")) {
+      mostrarAlerta({
+        msg: "Todos los campos son obligatorios",
+        error: true,
+      });
+      console.warn("Todos los campos son obligatorios");
+      return;
+    }
+
+    // Enviar datos del formulario al context
+    submitTarea({ nombre, descripcion, prioridad });
+  };
+  const { msg } = alerta;
   return (
     <Transition.Root show={modalFormularioTarea} as={Fragment}>
       <Dialog
@@ -83,7 +108,9 @@ const ModalFormularioTarea = () => {
                   >
                     Crear Tarea
                   </Dialog.Title>
-                  <form className="my-10">
+
+                  {msg && <Alerta alerta={alerta} />}
+                  <form className="my-10" onSubmit={handleSubmit}>
                     <div className="mb-5">
                       <label
                         htmlFor="nombre"
