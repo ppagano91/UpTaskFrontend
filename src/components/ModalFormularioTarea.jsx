@@ -84,7 +84,7 @@ const ModalFormularioTarea = () => {
       <Dialog
         as="div"
         className="fixed z-10 inset-0 overflow-y-auto"
-        onClose={handleModalTarea}
+        onClose={() => handleModalTarea("editar")}
       >
         <div className="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
           <Transition.Child
@@ -121,7 +121,7 @@ const ModalFormularioTarea = () => {
                 <button
                   type="button"
                   className="bg-white rounded-md text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                  onClick={handleModalTarea}
+                  onClick={() => handleModalTarea("editar")}
                 >
                   <span className="sr-only">Cerrar</span>
                   <svg
