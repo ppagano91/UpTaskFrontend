@@ -228,6 +228,9 @@ const ProyectosProvider = ({ children }) => {
   };
 
   const handleModalTarea = (modal = "") => {
+    if (modal === "crear") {
+      setModalFormularioTarea(!modalFormularioTarea);
+    }
     if (modal === "editar") {
       setModalFormularioTarea(!modalFormularioTarea);
     }
@@ -328,6 +331,54 @@ const ProyectosProvider = ({ children }) => {
     setModalEliminarTarea(true);
   };
 
+  // Eliminar Tarea
+  const eliminarTarea = async () => {
+    console.log(tarea);
+    try {
+      const token = localStorage.getItem("token");
+
+      if (!token) return;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await clienteAxios.delete(
+        `/tareas/${tarea._id}`,
+        config
+      );
+
+      setAlerta({
+        msg: data.msg,
+        error: false,
+      });
+
+      const proyectoActualizado = { ...proyecto };
+
+      // Filtrar las tareas del proyecto y quitar/filtrar la tarea eliminada
+      proyectoActualizado.tareas = proyectoActualizado.tareas.filter(
+        (tareaState) => tareaState._id !== tarea._id
+      );
+      setProyecto(proyectoActualizado);
+
+      setModalEliminarTarea(false);
+      setTarea({});
+
+      // Quitar alerta
+      setTimeout(() => {
+        setAlerta({
+          msg: "",
+          error: false,
+        });
+      }, 3000);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <ProyectosContext.Provider
       value={{
@@ -347,6 +398,7 @@ const ProyectosProvider = ({ children }) => {
         handleModalEditarTarea,
         modalEliminarTarea,
         handleModalEliminarTarea,
+        eliminarTarea,
       }}
     >
       {children}

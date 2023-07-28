@@ -4,12 +4,13 @@ import useProyectos from "../hooks/useProyectos";
 import ModalFormularioTarea from "../components/ModalFormularioTarea";
 import ModalEliminarTarea from "../components/ModalEliminarTarea";
 import Tarea from "../components/Tarea";
+import Alerta from "../components/Alerta";
 
 const Proyecto = () => {
   const params = useParams();
   const { id } = params;
 
-  const { obtenerProyecto, proyecto, cargando, handleModalTarea } =
+  const { obtenerProyecto, proyecto, cargando, handleModalTarea, alerta } =
     useProyectos();
   const { nombre } = proyecto;
 
@@ -18,6 +19,8 @@ const Proyecto = () => {
   }, [id]);
 
   if (cargando) return "Cargando...";
+
+  const { msg } = alerta;
 
   return (
     <>
@@ -45,7 +48,7 @@ const Proyecto = () => {
       </div>
       <button
         className="text-sm px-5 py-3 w-full md:w-auto rounded-lg uppercase font-bold bg-sky-400 text-white text-center mt-5 flex gap-2 items-center justify-center hover:bg-sky-600 transition-all duration-300"
-        onClick={handleModalTarea}
+        onClick={() => handleModalTarea("crear")}
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -70,6 +73,11 @@ const Proyecto = () => {
           {proyecto.tareas?.length}
         </span>
       </p>
+      <div className="flex justify-center">
+        <div className="w-full md:w-1/3 lg:w-1/4">
+          {msg && <Alerta alerta={alerta} />}
+        </div>
+      </div>
       <div className="bg-white shadow mt-10 rounded-lg">
         {proyecto.tareas?.length ? (
           proyecto.tareas?.map((tarea) => (
