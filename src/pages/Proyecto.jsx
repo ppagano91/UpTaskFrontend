@@ -66,19 +66,23 @@ const Proyecto = () => {
         </svg>
         Nueva Tarea
       </button>
+      <div className="flex justify-between items-center mt-10">
+        <p className="font-bold text-xl">Tareas del Proyecto</p>
 
-      <p className="text-gray-400 text-sm mt-5">
-        Cantidad de tareas:{" "}
-        <span className="font-bold text-gray-600">
-          {proyecto.tareas?.length}
-        </span>
-      </p>
+        <p className="text-gray-400 text-sm">
+          Cantidad de tareas:{" "}
+          <span className="font-bold text-gray-600">
+            {proyecto.tareas?.length}
+          </span>
+        </p>
+      </div>
+
       <div className="flex justify-center">
         <div className="w-full md:w-1/3 lg:w-1/4">
           {msg && <Alerta alerta={alerta} />}
         </div>
       </div>
-      <div className="bg-white shadow mt-10 rounded-lg">
+      <div className="bg-white shadow mt-5 rounded-lg">
         {proyecto.tareas?.length ? (
           proyecto.tareas?.map((tarea) => (
             <Tarea key={tarea._id} tarea={tarea} />
@@ -88,6 +92,17 @@ const Proyecto = () => {
             No hay tareas en este proyecto
           </p>
         )}
+      </div>
+
+      <div className="flex justify-between items-center mt-10">
+        <p className="font-bold text-xl">Colaboradores</p>
+
+        <Link
+          to={`/proyectos/nuevo-colaborador/${proyecto._id}`}
+          className="text-gray-400 uppercase font-bold hover:text-black transition-all duration-300"
+        >
+          + Añadir
+        </Link>
       </div>
 
       <ModalFormularioTarea />
