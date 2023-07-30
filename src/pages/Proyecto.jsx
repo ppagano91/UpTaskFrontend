@@ -26,7 +26,7 @@ const Proyecto = () => {
     <>
       <div className="flex justify-between ">
         <h1 className="font-black text-4xl">{nombre}</h1>
-        <div className="flex items-center gap-2 text-gray-400 hover:text-black">
+        <div className="flex items-center gap-2 text-gray-400 hover:text-black hover:cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -68,7 +68,7 @@ const Proyecto = () => {
       </button>
 
       <p className="text-gray-400 text-sm mt-5">
-        Tareas del Proyecto{" "}
+        Cantidad de tareas:{" "}
         <span className="font-bold text-gray-600">
           {proyecto.tareas?.length}
         </span>
