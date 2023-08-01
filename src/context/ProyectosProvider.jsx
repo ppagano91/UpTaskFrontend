@@ -22,6 +22,11 @@ const ProyectosProvider = ({ children }) => {
   const [colaborador, setColaborador] = useState({});
 
   const [proyectoCreadoEliminado, setProyectoCreadoEliminado] = useState(false);
+  const [modalEliminarColaborador, setModalEliminarColaborador] = useState(
+    false
+  );
+
+
 
   const navigate = useNavigate();
 
@@ -462,6 +467,17 @@ const ProyectosProvider = ({ children }) => {
     }
   };
 
+  // Eliminar Colaborador de un proyecto
+  const handleModalEliminarColaborador = (colaborador) => {
+    setModalEliminarColaborador(!modalEliminarColaborador);
+    console.log(colaborador)
+    setColaborador(colaborador);
+  }
+
+  const eliminarColaborador = async () => {
+    console.log(colaborador)
+  }
+
   return (
     <ProyectosContext.Provider
       value={{
@@ -485,6 +501,9 @@ const ProyectosProvider = ({ children }) => {
         submitColaborador,
         colaborador,
         agregarColaborador,
+        modalEliminarColaborador,
+        handleModalEliminarColaborador,
+        eliminarColaborador
       }}
     >
       {children}
