@@ -476,8 +476,44 @@ const ProyectosProvider = ({ children }) => {
 
   const eliminarColaborador = async () => {
     console.log(colaborador)
-  }
+    try {
+      const token = localStorage.getItem("token");
 
+      if (!token) return;
+
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      };
+
+      const { data } = await clienteAxios.post(
+        `/proyectos/eliminar-colaborador/${proyecto._id}`,
+        {id: colaborador._id},
+        config
+      );
+
+      const proyectoActualizado = { ...proyecto };
+
+      // Filtrar los colaboradores del proyecto y quitar/filtrar al colaborador eliminada
+      proyectoActualizado.colaboradores = proyectoActualizado.colaboradores.filter(
+        (colaboradorState) => colaboradorState._id !== colaborador._id
+      );
+
+      setProyecto(proyectoActualizado);
+
+      setAlerta({
+        msg: data.msg,
+        error: false,
+      });
+      setColaborador({});
+      setModalEliminarColaborador(false);
+    }
+    catch (error) {
+      console.log(error.response)
+    }
+  }
   return (
     <ProyectosContext.Provider
       value={{
