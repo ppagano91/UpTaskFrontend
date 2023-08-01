@@ -507,6 +507,12 @@ const ProyectosProvider = ({ children }) => {
         msg: data.msg,
         error: false,
       });
+      setTimeout(() => {
+        setAlerta({
+          msg: "",
+          error: false,
+        });
+      }, 3000);
       setColaborador({});
       setModalEliminarColaborador(false);
     }
