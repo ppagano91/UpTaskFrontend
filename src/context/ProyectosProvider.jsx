@@ -227,11 +227,19 @@ const ProyectosProvider = ({ children }) => {
 
       setProyecto(data);
     } catch (error) {
-      console.log(error);
+      navigate("/proyectos");
+      
       setAlerta({
         msg: error.response.data.msg,
         error: true,
       });
+
+      setTimeout(() => {
+        setAlerta({
+          msg: "",
+          error: false,
+        });
+      }, 3000);
     } finally {
       setCargando(false);
     }
