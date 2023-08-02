@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import useProyectos from "../hooks/useProyectos";
+import useAdmin from "../hooks/useAdmin";
 import ModalFormularioTarea from "../components/ModalFormularioTarea";
 import ModalEliminarTarea from "../components/ModalEliminarTarea";
 import Tarea from "../components/Tarea";
@@ -15,7 +16,9 @@ const Proyecto = () => {
 
   const { obtenerProyecto, proyecto, cargando, handleModalTarea, alerta } =
     useProyectos();
-  const { nombre } = proyecto;  
+  const { nombre } = proyecto;
+
+  const admin = useAdmin();
 
   useEffect(() => {
     obtenerProyecto(id);
@@ -24,12 +27,15 @@ const Proyecto = () => {
   if (cargando) return "Cargando...";
 
   const { msg } = alerta;
+  
+  
 
   return (
     msg && alerta.error ? <Alerta alerta={alerta} /> : (
     <>
       <div className="flex justify-between ">
         <h1 className="font-black text-4xl">{nombre}</h1>
+        {admin && (
         <div className="flex items-center gap-2 text-gray-400 hover:text-black hover:cursor-pointer">
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -49,7 +55,10 @@ const Proyecto = () => {
             Editar
           </Link>
         </div>
+        )}
       </div>
+
+      {admin && (
       <button
         className="text-sm px-5 py-3 w-full md:w-auto rounded-lg uppercase font-bold bg-sky-400 text-white text-center mt-5 flex gap-2 items-center justify-center hover:bg-sky-600 transition-all duration-300"
         onClick={() => handleModalTarea("crear")}
@@ -70,6 +79,7 @@ const Proyecto = () => {
         </svg>
         Nueva Tarea
       </button>
+      )}
       <div className="flex justify-between items-center mt-10">
         <p className="font-bold text-xl">Tareas del Proyecto</p>
 
@@ -98,6 +108,8 @@ const Proyecto = () => {
         )}
       </div>
 
+      {admin && (
+        <>
       <div className="flex justify-between items-center mt-10">
         <p className="font-bold text-xl">Colaboradores</p>
 
@@ -119,6 +131,8 @@ const Proyecto = () => {
           </p>
         )}
       </div>
+      </>
+      )}
 
       <ModalFormularioTarea />
       <ModalEliminarTarea />

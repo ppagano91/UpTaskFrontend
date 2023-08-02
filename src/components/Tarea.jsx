@@ -1,10 +1,12 @@
 import React from "react";
 import { formatearFecha } from "../helpers/formatearFecha";
 import useProyectos from "../hooks/useProyectos";
+import useAdmin from "../hooks/useAdmin";
 
 const Tarea = ({ tarea }) => {
   const { handleModalEditarTarea, handleModalEliminarTarea } = useProyectos();
   const { nombre, descripcion, prioridad, fechaEntrega, estado, _id } = tarea;
+  const admin = useAdmin();
   const handleStyles = (prioridad) => {
     switch (prioridad.toLowerCase()) {
       case "alta":
@@ -41,18 +43,22 @@ const Tarea = ({ tarea }) => {
             Incompleta
           </button>
         )}
+        {admin && (
         <button
           className="bg-indigo-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
           onClick={() => handleModalEditarTarea(tarea)}
         >
           Editar
         </button>
+        )}
+        {admin && (
         <button
           className="bg-red-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
           onClick={() => handleModalEliminarTarea(tarea)}
         >
           Eliminar
         </button>
+        )}
       </div>
     </div>
   );
