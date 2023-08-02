@@ -14,8 +14,7 @@ const Proyecto = () => {
   const params = useParams();
   const { id } = params;
 
-  const { obtenerProyecto, proyecto, cargando, handleModalTarea, alerta } =
-    useProyectos();
+  const { obtenerProyecto, proyecto, cargando, handleModalTarea, alerta } = useProyectos();
   const { nombre } = proyecto;
 
   const admin = useAdmin();
