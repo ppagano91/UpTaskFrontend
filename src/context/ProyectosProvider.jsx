@@ -22,11 +22,10 @@ const ProyectosProvider = ({ children }) => {
   const [colaborador, setColaborador] = useState({});
 
   const [proyectoCreadoEliminado, setProyectoCreadoEliminado] = useState(false);
-  const [modalEliminarColaborador, setModalEliminarColaborador] = useState(
-    false
-  );
+  const [modalEliminarColaborador, setModalEliminarColaborador] =
+    useState(false);
 
-
+  const [buscador, setBuscador] = useState(false);
 
   const navigate = useNavigate();
 
@@ -228,7 +227,7 @@ const ProyectosProvider = ({ children }) => {
       setProyecto(data);
     } catch (error) {
       navigate("/proyectos");
-      
+
       setAlerta({
         msg: error.response.data.msg,
         error: true,
@@ -478,12 +477,12 @@ const ProyectosProvider = ({ children }) => {
   // Eliminar Colaborador de un proyecto
   const handleModalEliminarColaborador = (colaborador) => {
     setModalEliminarColaborador(!modalEliminarColaborador);
-    console.log(colaborador)
+    console.log(colaborador);
     setColaborador(colaborador);
-  }
+  };
 
   const eliminarColaborador = async () => {
-    console.log(colaborador)
+    console.log(colaborador);
     try {
       const token = localStorage.getItem("token");
 
@@ -498,16 +497,17 @@ const ProyectosProvider = ({ children }) => {
 
       const { data } = await clienteAxios.post(
         `/proyectos/eliminar-colaborador/${proyecto._id}`,
-        {id: colaborador._id},
+        { id: colaborador._id },
         config
       );
 
       const proyectoActualizado = { ...proyecto };
 
       // Filtrar los colaboradores del proyecto y quitar/filtrar al colaborador eliminada
-      proyectoActualizado.colaboradores = proyectoActualizado.colaboradores.filter(
-        (colaboradorState) => colaboradorState._id !== colaborador._id
-      );
+      proyectoActualizado.colaboradores =
+        proyectoActualizado.colaboradores.filter(
+          (colaboradorState) => colaboradorState._id !== colaborador._id
+        );
 
       setProyecto(proyectoActualizado);
 
@@ -523,14 +523,13 @@ const ProyectosProvider = ({ children }) => {
       }, 3000);
       setColaborador({});
       setModalEliminarColaborador(false);
+    } catch (error) {
+      console.log(error.response);
     }
-    catch (error) {
-      console.log(error.response)
-    }
-  }
+  };
 
   const completarTarea = async (id) => {
-    console.log("tarea", id)
+    console.log("tarea", id);
     try {
       const token = localStorage.getItem("token");
 
@@ -551,22 +550,24 @@ const ProyectosProvider = ({ children }) => {
 
       const proyectoActualizado = { ...proyecto };
 
-      proyectoActualizado.tareas = proyectoActualizado.tareas.map(tareaState => 
-        tareaState._id === data._id ? data : tareaState);
-      
-        setProyecto(proyectoActualizado);
-        setTarea({});
-        setAlerta({
-          msg: "",
-          error: false,
-        });
+      proyectoActualizado.tareas = proyectoActualizado.tareas.map(
+        (tareaState) => (tareaState._id === data._id ? data : tareaState)
+      );
 
+      setProyecto(proyectoActualizado);
+      setTarea({});
+      setAlerta({
+        msg: "",
+        error: false,
+      });
+    } catch (error) {
+      console.log(error.response);
     }
-    catch (error) {
-      console.log(error.response)
-    }
-  }
+  };
 
+  const handleBuscador = () => {
+    setBuscador(!buscador);
+  };
 
   return (
     <ProyectosContext.Provider
@@ -594,7 +595,9 @@ const ProyectosProvider = ({ children }) => {
         modalEliminarColaborador,
         handleModalEliminarColaborador,
         eliminarColaborador,
-        completarTarea
+        completarTarea,
+        buscador,
+        handleBuscador,
       }}
     >
       {children}
