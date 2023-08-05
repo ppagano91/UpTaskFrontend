@@ -8,6 +8,7 @@ import Tarea from "../components/Tarea";
 import Alerta from "../components/Alerta";
 import Colaborador from "../components/Colaborador";
 import ModalEliminarColaborador from "../components/ModalEliminarColaborador";
+import Spinner from "../components/Spinner";
 
 const Proyecto = () => {
   const params = useParams();
@@ -25,7 +26,7 @@ const Proyecto = () => {
     obtenerProyecto(id);
   }, [id]);
 
-  if (cargando) return "Cargando...";
+  if (cargando) return <Spinner />;
 
   const { msg } = alerta;
 

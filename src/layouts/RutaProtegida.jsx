@@ -3,11 +3,12 @@ import { Outlet, Navigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import Header from "../components/Header";
 import Sidebar from "../components/Sidebar";
+import Spinner from "../components/Spinner";
 
 const RutaProtegida = () => {
   const { auth, cargando } = useAuth();
 
-  if (cargando) return "Cargando...";
+  if (cargando) return <Spinner />;
 
   return (
     <>
