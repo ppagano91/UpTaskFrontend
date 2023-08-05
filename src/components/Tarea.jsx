@@ -4,9 +4,20 @@ import useProyectos from "../hooks/useProyectos";
 import useAdmin from "../hooks/useAdmin";
 
 const Tarea = ({ tarea }) => {
-  const { handleModalEditarTarea, handleModalEliminarTarea, completarTarea } = useProyectos();
-  const { nombre, descripcion, prioridad, fechaEntrega, estado, _id } = tarea;
+  const { handleModalEditarTarea, handleModalEliminarTarea, completarTarea } =
+    useProyectos();
+  const {
+    nombre,
+    descripcion,
+    prioridad,
+    fechaEntrega,
+    estado,
+    _id,
+    completado,
+  } = tarea;
   const admin = useAdmin();
+  console.log(completado);
+
   const handleStyles = (prioridad) => {
     switch (prioridad.toLowerCase()) {
       case "alta":
@@ -20,8 +31,8 @@ const Tarea = ({ tarea }) => {
     }
   };
   return (
-    <div className="border-b p-5 flex flex-col lg:flex-row justify-between">
-      <div className="ml-2 mr-5">
+    <div className="border-b p-5 flex lg:flex-row justify-between">
+      <div className="ml-2 mr-5 flex-col items-start">
         <p className="mb-1 text-xl">{nombre}</p>
         <p className="mb-1 text-md text-gray-500 uppercase">{descripcion}</p>
         <p className="mb-1 text-md">{formatearFecha(fechaEntrega)}</p>
@@ -32,27 +43,40 @@ const Tarea = ({ tarea }) => {
         >
           {prioridad}
         </p>
+        {estado && completado?.nombre && completado.nombre.trim() !== "" && (
+          <div className="flex items-start">
+            {" "}
+            <p className="mb-1 text-xs bg-green-600 uppercase p-1 rounded-lg text-white">
+              Completada por: {completado.nombre}
+            </p>
+          </div>
+        )}
       </div>
-      <div className="flex gap-2 items-center">        
-          <button className={`${estado?"bg-green-600":"bg-gray-600"} px-4 py-3 text-white uppercase font-bold text-sm rounded-lg`} onClick={()=>completarTarea(_id)}>
-            {estado?"Completa":"Incompleta"}
-          </button>
-        
-        {admin && (
+      <div className="flex gap-2 items-center">
         <button
-          className="bg-indigo-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
-          onClick={() => handleModalEditarTarea(tarea)}
+          className={`${
+            estado ? "bg-green-600" : "bg-gray-600"
+          } px-4 py-3 text-white uppercase font-bold text-sm rounded-lg`}
+          onClick={() => completarTarea(_id)}
         >
-          Editar
+          {estado ? "Completa" : "Incompleta"}
         </button>
+
+        {admin && (
+          <button
+            className="bg-indigo-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
+            onClick={() => handleModalEditarTarea(tarea)}
+          >
+            Editar
+          </button>
         )}
         {admin && (
-        <button
-          className="bg-red-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
-          onClick={() => handleModalEliminarTarea(tarea)}
-        >
-          Eliminar
-        </button>
+          <button
+            className="bg-red-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
+            onClick={() => handleModalEliminarTarea(tarea)}
+          >
+            Eliminar
+          </button>
         )}
       </div>
     </div>
