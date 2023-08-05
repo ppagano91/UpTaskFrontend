@@ -19,7 +19,7 @@ const NuevoColaborador = () => {
     obtenerProyecto(params.id);
   }, []);
 
-  console.log(colaborador);
+  // console.log(colaborador);
 
   // if (cargando) return <p>Cargando...</p>;
   if (!proyecto?._id) return <Alerta alerta={alerta} />;
@@ -40,7 +40,7 @@ const NuevoColaborador = () => {
       ) : (
         colaborador?._id && (
           <div className="flex justify-center mt-10">
-            <div className="bg-white py-10 px-5 md:w-1/2 rounded-lg shadow">
+            <div className="bg-white py-10 px-5 lg:w-1/2 rounded-lg shadow w-full">
               <h3 className="text-center mb-10 text-2xl font-bold">
                 Resultado:
               </h3>

@@ -31,7 +31,7 @@ const Tarea = ({ tarea }) => {
     }
   };
   return (
-    <div className="border-b p-5 flex lg:flex-row justify-between">
+    <div className="border-b p-5 flex justify-between items-center">
       <div className="ml-2 mr-5 flex-col items-start">
         <p className="mb-1 text-xl">{nombre}</p>
         <p className="mb-1 text-md text-gray-500 uppercase">{descripcion}</p>
@@ -52,7 +52,7 @@ const Tarea = ({ tarea }) => {
           </div>
         )}
       </div>
-      <div className="flex gap-2 items-center">
+      <div className="flex flex-col lg:flex-row gap-2">
         <button
           className={`${
             estado ? "bg-green-600" : "bg-gray-600"
