@@ -1,12 +1,34 @@
-import React from "react";
+import React, { useEffect } from "react";
 import useProyectos from "../hooks/useProyectos";
 import PreviewProyecto from "../components/PreviewProyecto";
 import Alerta from "../components/Alerta";
+import io from "socket.io-client";
+
+let socket;
 
 const Proyectos = () => {
-  const { proyectos,alerta } = useProyectos();
+  const { proyectos, alerta } = useProyectos();
 
-  const {msg} = alerta
+  useEffect(() => {
+    socket = io(import.meta.env.VITE_BACKEND_URL);
+    /*
+    socket.on("proyecto-creado", (data) => {
+      console.log(data);
+    });
+    socket.on("proyecto-actualizado", (data) => {
+      console.log(data);
+    });
+    socket.on("proyecto-eliminado", (data) => {
+      console.log(data);
+    });
+    return () => {
+      socket.emit("disconnect");
+      socket.off();
+    };
+    */
+  }, []);
+
+  const { msg } = alerta;
   return (
     <>
       <h1 className="text-4xl font-black">Proyectos</h1>
