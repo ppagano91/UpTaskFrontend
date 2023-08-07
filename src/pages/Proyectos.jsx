@@ -11,11 +11,7 @@ const Proyectos = () => {
 
   useEffect(() => {
     socket = io(import.meta.env.VITE_BACKEND_URL);
-    socket.emit("prueba");
 
-    socket.on("respuesta", () => {
-      console.log("Respuesta del servidor");
-    });
     /*
     socket.on("proyecto-creado", (data) => {
       console.log(data);

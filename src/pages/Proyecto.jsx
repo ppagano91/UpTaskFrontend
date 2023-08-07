@@ -9,6 +9,7 @@ import Alerta from "../components/Alerta";
 import Colaborador from "../components/Colaborador";
 import ModalEliminarColaborador from "../components/ModalEliminarColaborador";
 import Spinner from "../components/Spinner";
+import io from "socket.io-client";
 
 const Proyecto = () => {
   const params = useParams();
@@ -25,6 +26,17 @@ const Proyecto = () => {
   useEffect(() => {
     obtenerProyecto(id);
   }, [id]);
+
+  useEffect(() => {
+    socket = io(import.meta.env.VITE_BACKEND_URL);
+    socket.emit("abrir-proyecto", params.id);
+  }, []);
+
+  useEffect(() => {
+    socket.on("respuesta", (data) => {
+      console.log(data);
+    });
+  });
 
   if (cargando) return <Spinner />;
 
