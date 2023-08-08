@@ -595,6 +595,15 @@ const ProyectosProvider = ({ children }) => {
     setProyecto(proyectoActualizado);
   };
 
+  const cerrarSesionProyectos = () => {
+    setProyectos([]);
+    setProyecto({});
+    setTarea({
+      msg: "",
+      error: false,
+    });
+  };
+
   return (
     <ProyectosContext.Provider
       value={{
@@ -628,6 +637,7 @@ const ProyectosProvider = ({ children }) => {
         eliminarTareaProyecto,
         actualizarTareaProyecto,
         cambiarEstadoTarea,
+        cerrarSesionProyectos,
       }}
     >
       {children}
