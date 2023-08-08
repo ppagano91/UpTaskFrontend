@@ -11,32 +11,49 @@ import ModalEliminarColaborador from "../components/ModalEliminarColaborador";
 import Spinner from "../components/Spinner";
 import io from "socket.io-client";
 
+let socket;
+
 const Proyecto = () => {
   const params = useParams();
   const { id } = params;
 
-  const { obtenerProyecto, proyecto, cargando, handleModalTarea, alerta } =
-    useProyectos();
+  const {
+    obtenerProyecto,
+    proyecto,
+    cargando,
+    handleModalTarea,
+    alerta,
+    submitTareasProyecto,
+  } = useProyectos();
   const { nombre } = proyecto;
 
   const admin = useAdmin();
 
-  console.log(proyecto);
+  // console.log(proyecto);
 
   useEffect(() => {
     obtenerProyecto(id);
   }, [id]);
 
+  // Socket.io
   useEffect(() => {
     socket = io(import.meta.env.VITE_BACKEND_URL);
     socket.emit("abrir-proyecto", params.id);
   }, []);
 
   useEffect(() => {
-    socket.on("respuesta", (data) => {
-      console.log(data);
+    socket.on("tarea-agregada", (nuevaTarea) => {
+      if (nuevaTarea.proyecto === proyecto?._id) {
+        submitTareasProyecto(nuevaTarea);
+      }
     });
   });
+
+  // useEffect(() => {
+  //   socket.on("respuesta", (data) => {
+  //     console.log(data);
+  //   });
+  // });
 
   if (cargando) return <Spinner />;
 

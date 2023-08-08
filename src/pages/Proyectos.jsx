@@ -11,22 +11,6 @@ const Proyectos = () => {
 
   useEffect(() => {
     socket = io(import.meta.env.VITE_BACKEND_URL);
-
-    /*
-    socket.on("proyecto-creado", (data) => {
-      console.log(data);
-    });
-    socket.on("proyecto-actualizado", (data) => {
-      console.log(data);
-    });
-    socket.on("proyecto-eliminado", (data) => {
-      console.log(data);
-    });
-    return () => {
-      socket.emit("disconnect");
-      socket.off();
-    };
-    */
   }, []);
 
   const { msg } = alerta;
