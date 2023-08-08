@@ -329,11 +329,8 @@ const ProyectosProvider = ({ children }) => {
         config
       );
 
-      const proyectoActualizado = { ...proyecto };
-      proyectoActualizado.tareas = proyectoActualizado.tareas.map(
-        (tareaState) => (tareaState._id === data._id ? data : tareaState)
-      );
-      setProyecto(proyectoActualizado);
+      // Pasa actualizarTareaProyecto (Socket IO)
+      socket.emit("actualizar-tarea", data);
 
       setAlerta({
         msg: "",
@@ -547,20 +544,16 @@ const ProyectosProvider = ({ children }) => {
         config
       );
 
-      const proyectoActualizado = { ...proyecto };
-
-      proyectoActualizado.tareas = proyectoActualizado.tareas.map(
-        (tareaState) => (tareaState._id === data._id ? data : tareaState)
-      );
-
-      setProyecto(proyectoActualizado);
       setTarea({});
       setAlerta({
         msg: "",
         error: false,
       });
+
+      // Socket io
+      socket.emit("cambiar-estado", data);
     } catch (error) {
-      console.log(error.response);
+      console.error(error.response);
     }
   };
 
@@ -581,6 +574,23 @@ const ProyectosProvider = ({ children }) => {
     const proyectoActualizado = { ...proyecto };
     proyectoActualizado.tareas = proyectoActualizado.tareas.filter(
       (tareaState) => tareaState._id !== tarea._id
+    );
+    setProyecto(proyectoActualizado);
+  };
+
+  const actualizarTareaProyecto = (tarea) => {
+    const proyectoActualizado = { ...proyecto };
+    proyectoActualizado.tareas = proyectoActualizado.tareas.map((tareaState) =>
+      tareaState._id === tarea._id ? tarea : tareaState
+    );
+    setProyecto(proyectoActualizado);
+  };
+
+  const cambiarEstadoTarea = (tarea) => {
+    const proyectoActualizado = { ...proyecto };
+
+    proyectoActualizado.tareas = proyectoActualizado.tareas.map((tareaState) =>
+      tareaState._id === tarea._id ? tarea : tareaState
     );
     setProyecto(proyectoActualizado);
   };
@@ -616,6 +626,8 @@ const ProyectosProvider = ({ children }) => {
         handleBuscador,
         submitTareasProyecto,
         eliminarTareaProyecto,
+        actualizarTareaProyecto,
+        cambiarEstadoTarea,
       }}
     >
       {children}
