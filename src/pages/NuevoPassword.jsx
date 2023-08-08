@@ -65,7 +65,6 @@ const NuevoPassword = () => {
         password,
       });
 
-      console.log(data);
       setAlerta({
         msg: data.msg,
         error: false,

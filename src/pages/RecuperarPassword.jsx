@@ -12,7 +12,6 @@ const RecuperarPassword = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(email);
 
     if (email.trim() === "") {
       setAlerta({
@@ -41,8 +40,6 @@ const RecuperarPassword = () => {
         msg: data.msg,
         error: false,
       });
-
-      console.log(data);
     } catch (error) {
       console.log(error.response);
       setAlerta({

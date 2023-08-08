@@ -16,7 +16,6 @@ const Tarea = ({ tarea }) => {
     completado,
   } = tarea;
   const admin = useAdmin();
-  console.log(completado);
 
   const handleStyles = (prioridad) => {
     switch (prioridad.toLowerCase()) {

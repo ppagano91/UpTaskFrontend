@@ -36,7 +36,6 @@ const FormularioProyecto = () => {
 
     // Validar el proyecto
     if ([nombre, descripcion, fechaEntrega, cliente].includes("")) {
-      console.log("Todos los campos son obligatorios");
       mostrarAlerta({
         msg: "Todos los campos son obligatorios",
         error: true,
