@@ -24,6 +24,7 @@ const Proyecto = () => {
     handleModalTarea,
     alerta,
     submitTareasProyecto,
+    EliminarTareaProyecto,
   } = useProyectos();
   const { nombre } = proyecto;
 
@@ -45,6 +46,12 @@ const Proyecto = () => {
     socket.on("tarea-agregada", (nuevaTarea) => {
       if (nuevaTarea.proyecto === proyecto?._id) {
         submitTareasProyecto(nuevaTarea);
+      }
+    });
+
+    socket.on("tarea-eliminada", (tareaEliminada) => {
+      if (tareaEliminada.proyecto === proyecto._id) {
+        eliminarTareaProyecto(tareaEliminada);
       }
     });
   });

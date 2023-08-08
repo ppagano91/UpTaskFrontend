@@ -379,16 +379,13 @@ const ProyectosProvider = ({ children }) => {
         error: false,
       });
 
-      const proyectoActualizado = { ...proyecto };
-
-      // Filtrar las tareas del proyecto y quitar/filtrar la tarea eliminada
-      proyectoActualizado.tareas = proyectoActualizado.tareas.filter(
-        (tareaState) => tareaState._id !== tarea._id
-      );
-      setProyecto(proyectoActualizado);
+      // Pasa a submitTareasProyecto (Socket IO)
 
       setModalEliminarTarea(false);
       setTarea({});
+
+      // Socket IO
+      socket.emit("eliminar-tarea", tarea);
 
       // Quitar alerta
       setTimeout(() => {
@@ -572,11 +569,19 @@ const ProyectosProvider = ({ children }) => {
   };
 
   // Funciones para Socket.io
-  const submitTareasProyecto = async (tarea) => {
+  const submitTareasProyecto = (tarea) => {
     // Agregar la tarea al state
     const proyectoActualizado = { ...proyecto };
     proyectoActualizado.tareas = [...proyectoActualizado.tareas, tarea];
 
+    setProyecto(proyectoActualizado);
+  };
+
+  const eliminarTareaProyecto = (tarea) => {
+    const proyectoActualizado = { ...proyecto };
+    proyectoActualizado.tareas = proyectoActualizado.tareas.filter(
+      (tareaState) => tareaState._id !== tarea._id
+    );
     setProyecto(proyectoActualizado);
   };
 
@@ -610,6 +615,7 @@ const ProyectosProvider = ({ children }) => {
         buscador,
         handleBuscador,
         submitTareasProyecto,
+        eliminarTareaProyecto,
       }}
     >
       {children}
